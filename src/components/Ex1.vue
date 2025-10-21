@@ -2,6 +2,41 @@
     export default { 
         // Add Code Here to complete the task
         // Note: DO NOT USE "eval()". In security, "eval" is considered "evil"!!!
+        data() {
+            return {
+                x:0,
+                y:0,
+                selectedOp: '+',
+                operators: ['+','-','*','/','%']
+            }
+        },
+        computed: {
+            result() {
+                const x = this.x
+                const y = this.y
+                const selectedOp = this.selectedOp
+
+                var result
+
+                if (selectedOp == '+') {
+                    result = x + y
+                }
+                else if (selectedOp == '-') {
+                    result = x - y
+                }
+                else if (selectedOp == '*') {
+                    result = x * y
+                }
+                else if (selectedOp == '/') {
+                    result = x / y
+                }
+                else if (selectedOp == '%') {
+                    result = x % y
+                }
+
+                return result
+            }
+        }
     }
 </script>
 
