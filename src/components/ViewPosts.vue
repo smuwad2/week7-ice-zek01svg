@@ -36,10 +36,24 @@ export default {
     },
     methods: {
         editPost(id) {
-            
+            this.showEditPost = true
+            this.editPostId = id
         },
         updatePost(event) {
-            
+            const url = `http://localhost:3000/updatePost?id=${this.editPostId}` // the endpoint is expecting the id to be in the url
+            var params = {
+                // the post endpoint is expecting a json object with two properties: entry, and mood
+                "entry": this.entry,
+                "mood": this.mood
+            }
+
+            // send the request
+            axios.post(url, params)
+            .then(response => { console.log(response.data) })
+            .catch(error => { console.log(error.message) })
+
+            // hide the update form
+            this.showEditPost = false
         }
     }
 }
@@ -61,7 +75,7 @@ export default {
                     <td>{{ post.id }}</td>
                     <td>{{ post.entry }}</td>
                     <td>{{ post.mood }}</td>
-                    <td><button>Edit</button></td>
+                    <td @click="editPost(post.id)"><button>Edit</button></td>
                 </tr>
             </tbody>
 
@@ -82,7 +96,7 @@ export default {
                             <option v-for="mood in moods" :value="mood">{{ mood }}</option>
                         </select>
                     </div>
-                    <button type="submit" class="btn btn-primary">Update Post</button>
+                    <button type="submit" class="btn btn-primary" @click="updatePost(this.editPostId)">Update Post</button>
                 </form>
             </div>
         </div>
